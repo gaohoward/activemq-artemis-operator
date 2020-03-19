@@ -1,4 +1,4 @@
-packageName: activemq-artemis
+packageName: howard-operator-bundle
 channels:
   - name: alpha
     currentCSV: activemq-artemis-operator.v0.9.1

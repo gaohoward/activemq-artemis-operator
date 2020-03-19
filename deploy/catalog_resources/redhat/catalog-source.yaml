@@ -17,7 +17,7 @@ items:
               categories: "Streaming & Messaging"
               certified: "false"
               description: ActiveMQ Artemis Operator provides the ability to deploy and manage stateful ActiveMQ Artemis broker clusters
-              containerImage: quay.io/artemiscloud/activemq-artemis-operator:0.9.1
+              containerImage: quay.io/hgao/operator:v3198
               createdAt: 2019-12-09T08:16:32Z
               capabilities: Basic Install
               repository: https://github.com/rh-messaging/activemq-artemis-operator
@@ -33,7 +33,7 @@ items:
                     "spec": {
                         "deploymentPlan": {
                             "size": 1,
-                            "image": "quay.io/artemiscloud/activemq-artemis-openshift-image:2.11"
+                            "image": "quay.io/hgao/amq-openshift-image:amq743LTS"
                         }
                     }
                 },
@@ -80,7 +80,7 @@ items:
               - name: Documentation
                 url: https://access.redhat.com/documentation/en-us/red_hat_amq/
             icon:
-              - base64data: iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAAAZiS0dEAP8A/wD/oL2nkwAAAAlwSFlzAAAlywAAJcsBGkdkZgAAAAd0SU1FB+MDHQ02AU8UBK4AAASBSURBVFjDtZfNb1RlFMZ/7zt3vqCU0pSSQjMSbCHVRSEjq7aBhQvFsDBqJIYF/gGGxAUpREyMCG5YqCSuiDGGRE2NCxTRBgkJuGlKYpAOBW3NtJ22UzoznTv3du6d++FibsvQ6XzQ1rO899z3Oefc5zznvII6LRahCTgCHAIOAu3ANu91GpgEhoBbwLWuOJl6zhV1AO8F+oG3gU11xqsD3wMXuuI8XFMAsQhh4BzwHuBnbVYAvgDOdsXR6w4gFqET+BF4kY2x+8DrXXEe1QwgFuEA8CuwnY21Od3h1egkwxUD8DK/8z+AozugOaQl9PQmiJUF4P3zoQ0s+0rwJRv1QbQngQaglPidqwYuWjtp+eRzELIqmF0wyefzy7kVcira6XdLXfY58KlH7qKX12p/VWO7cvA1OgZ+wrVthM+HY1lIRXnKx7EsMpkMOVXFJ8AwDMJ+P3/3daw8zpLQ3ZtgZCmd0/W22r/jY6jpFLdv/o6xuFgGbrsuqqqyuJDhcTJZMR8XzgAIT+GmaonMcgUsC6H4sAsWPr+/DBxgMaciERhGnk2BwGoVAMj7BO2KJ681Fc6ZHCd18waIculYXFjAdoosU/buI9y6Ayu7gDUyQjqnVjoy5LgcVYDD9ZTemR4heeLlmmxvvHydzaEw8Y/OYt74ttaxhxTgpdIn4eOnCHR0epS2KmusrmOXyEh28Be0u4OEZmeYv/J1PeC4EFW8qbZszW8dY8v+A1U/zGsaqpYjr+lIn8QfDKEWTLg7yHz/ibr1QUBEKRmpT/6pmiWZTBIIhjBNk+f27CkBz6FqOq5tMzUxQbChgdYdO9YkUC40KquyY3MDO3cFED6J67hl4AiBkJKtzdtQAkGklGtWSQVIAa3L2T8aRQYDBNt2oTQ14Zgm2v17WKaJlsvhel1guRD2vjFmZzDj8WcGF5AVsQh3gbKfrvS+SeSzLxE+H//sb66m7euxe4o3gMoCsG4PED8JbR9+7EUUJHzsJKaU+FxorDgMbArGk1ng6BrG1cuVKjAsYhHeAa5ULFOgAdfMoRw8QsfAzzVY5ZJNp9GNPAKBbdtI0+RR3/OVAjghgWveDrf6mWauSEAvo+nJCbRslj+HhjAN42nwTBrDtpmfe4yanGFyfKxqN0vBVeltr9/VUjjda4amrU2EwmEiu3fj92ZBETyDYdkABPx+lGCIcDhcjYA/9EyRWmrDC8Dx1SbiEuH8mRT67AwCganrhID83BwA2kKGfKFQpMqWRppaWnAdG7/jYCRnV8O3BJxfuRFdBN5fL9vbvrpOY3c301e+IXvxVKXsL/UligtJqYJ84G2v62o117KqggOjUtBfaSntAP7QHbavtc/lnijO2HCl1ylvKX1QcS0fbieqOfwGNG/wbpqS8EpvgqGnAl7pFZ1kWEIPMLqB4KNe5kNlFVvNuzfBA0UQFcVrlbUOYEvAJQWipWV/psvp7Z284MIZF94AQnUCGwIGBJzvTTCyrtvxkt3ZRbPjchQ47EJUQGRpJAjIuhAXMAzckoKrPVPM13Puf2Qd6X5KXrjXAAAAAElFTkSuQmCC
+              - base64data:iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAACXBIWXMAACXLAAAlywEaR2RmAAAER0lEQVRYhb2XS0xcVRyHv3PmzstSGLCF4kyAIKDioiXTxgjadqkkXZhWRdOoSzdNExdNNepG07rpwrSJK+PCND6CYUGsVtJFiTYaMjSmgSkS24YZ3hZwmHuZuTP3HhfM4ADz6hT9rc7jf873u+d9BWXqZgs+j6IXxRHgEIIAiloABMsoosAIgusJwZWue6yU068oFRD204HGWRSvAo+U6dcAvsXi/FPT/FGRgUgAb9zBxyhOAc4ywVuVQnBRT/HBwRmMsg2MB2gXkgHg6QrBWzWmbF7qjDJZ0sBYM10SrqLYu0PwLGnRULwYnCJU0MB4gHbh4JcdhwOGDbrNslPR8+ws4Wy5zCYiAbxCMvAfwgFqU4KBqw3sytZp2URmwRWcc1HfzpMj26awLA37N2Wf8Dr4BDgFmREI++nIrPaCcjR3VAQvoLeH99G5YQAH71L5VqtEGpL3AOTNFnzAK/8jPKvjv/l5VHoUvZRxwtnRuzttwJOEYxqKo+VE27PjhJuLxxg2BCPr6V/f6MO89nXReKk4ogEHcwu9J8/gamtfz1jpgo1ThoGVc4zEhn5AHx1ah7/5Gua1r4q7BWwIaplbbUN1L/ex+0BX0YYJXWdVj5PQDaRD4nR7WE2ZMDrEsB9MSsMBJDRpG1dqjtZWYywsLOByezBNk+bW1hx4nFXdQFkW05EI7qoq6hsaygJulQ3VWr4Kz64qHvO7EA6Jsv8dniwcIRBSUlNXi+ZyI6XM101Z0oAloD5bsDY5gXS7cDf60Xw+bNNEH7tF2jTR43GUWJ/3tAJvpk1yfg5zauqB4RJiItzEKLBt0rXnTtD06WcIh4M/D9Rtqss52x9WtzRgJJ+B9M/9TJ2Gxg8/yjhy4+07jSklDgXVhbq0LFLJBNmL1jZ0koOf5w2VEBLhZl5HcblQf8JVhTLjaId6aev/vvj3KEVseRkjmUAgsCwLaZpMPv94fgOCt2RCcAXyP5cAlBkHIJH5otloBD0W4/eREcxkcjN8ZZmkZXF/8S9WF+aI3r1TzG5CCgZl1z1WEHxTLNKwwchsBl+ND4/XS1NLC06nMwe+QjJtAeByOtHcHrxeb4EeAfiuO8qSBqAszgvJSfLciNkF51xZwpifQyAwDQMPkFhcBED/e4VEKgWAtrsa3549KNvCadskF+bzwdPYnIOcJ1m4mQso3skHfxA1fvEj1fv3M3v5S2IXzhQKu3R4JudBAlBl8T4w9jBwAJVOl4JPrFmczWY2PUrHArRJBzcMi72V7nPZGsS+EypUvaRBT/cMt/MaAAg1EdTT/ATUba17SC05bF7omWMkt3DbIR6cIqRBDzCxg/AJDXq2wvMaAOie4XaNRVDCRaDwo6C00sClGotg7rDnquTP6fA+OjMPyOOAp0xwEujH5tzhOcaLBZY0kNWNAHW24hiKozYEJTTZmStBQsyGKQkhW3DdDYPPTHO/nH7/AQDFo5Dow5MRAAAAAElFTkSuQmCC
                 mediatype: image/png
             labels:
               alm-owner-amq-broker: activemq-artemis-operator
@@ -246,7 +246,7 @@ items:
                           serviceAccountName: activemq-artemis-operator
                           containers:
                             - name: activemq-artemis-operator
-                              image: quay.io/artemiscloud/activemq-artemis-operator:0.9.1
+                              image: quay.io/hgao/operator:v3198
                               command:
                                 -  /home/activemq-artemis-operator/bin/entrypoint
                               imagePullPolicy: Always
@@ -571,7 +571,7 @@ items:
               served: false
               storage: false
       packages: >
-        - packageName: activemq-artemis
+        - packageName: howard-operator-test
           channels:
             - name: alpha
               currentCSV: activemq-artemis-operator.v0.9.1
