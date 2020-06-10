@@ -665,16 +665,16 @@ func generateAcceptorConnectorSSLArguments(customResource *brokerv2alpha2.Active
 	trustStorePath := "\\/etc\\/" + secretName + "-volume\\/client.ts"
 	if err := resources.Retrieve(secretNamespacedName, client, userPasswordSecret); err == nil {
 		if "" != string(userPasswordSecret.Data["keyStorePassword"]) {
-			keyStorePassword = string(userPasswordSecret.Data["keyStorePassword"])
+			keyStorePassword = strings.ReplaceAll(string(userPasswordSecret.Data["keyStorePassword"]), "/", "\\/")
 		}
 		if "" != string(userPasswordSecret.Data["keyStorePath"]) {
-			keyStorePath = string(userPasswordSecret.Data["keyStorePath"])
+			keyStorePath = strings.ReplaceAll(string(userPasswordSecret.Data["keyStorePath"]), "/", "\\/")
 		}
 		if "" != string(userPasswordSecret.Data["trustStorePassword"]) {
-			trustStorePassword = string(userPasswordSecret.Data["trustStorePassword"])
+			trustStorePassword = strings.ReplaceAll(string(userPasswordSecret.Data["trustStorePassword"]), "/", "\\/")
 		}
 		if "" != string(userPasswordSecret.Data["trustStorePath"]) {
-			trustStorePath = string(userPasswordSecret.Data["trustStorePath"])
+			trustStorePath = strings.ReplaceAll(string(userPasswordSecret.Data["trustStorePath"]), "/", "\\/")
 		}
 	}
 	sslArguments = sslArguments + ";" + "keyStorePath=" + keyStorePath
