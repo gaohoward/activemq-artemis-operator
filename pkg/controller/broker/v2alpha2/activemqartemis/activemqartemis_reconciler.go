@@ -455,16 +455,20 @@ func configureAcceptorsExposure(customResource *brokerv2alpha2.ActiveMQArtemis, 
 			}
 			targetPortName := acceptor.Name + "-" + ordinalString
 			targetServiceName := customResource.Name + "-" + targetPortName + "-svc"
+			log.Info("xxxxx processing route", "name", targetServiceName, "ssl", acceptor.SSLEnabled)
 			routeDefinition := routes.NewRouteDefinitionForCR(namespacedName, serviceRoutelabels, targetServiceName, targetPortName, acceptor.SSLEnabled)
 			routeNamespacedName := types.NamespacedName{
 				Name:      routeDefinition.Name,
 				Namespace: customResource.Namespace,
 			}
+			log.Info("xxxxx Expose the acceptor?", "expose", acceptor.Expose)
 			if acceptor.Expose {
 				requestedResources = append(requestedResources, routeDefinition)
+				log.Info("xxxx appended route", "routedef", routeDefinition)
 				//causedUpdate, err = resources.Enable(customResource, client, scheme, routeNamespacedName, routeDefinition)
 			} else {
 				causedUpdate, err = resources.Disable(customResource, client, scheme, routeNamespacedName, routeDefinition)
+				log.Info("xxxxx disabled route", "routedef", routeDefinition)
 			}
 		}
 	}
@@ -906,7 +910,7 @@ func imageSyncCausedUpdateOn(deploymentPlan *brokerv2alpha2.DeploymentPlanType, 
 func (reconciler *ActiveMQArtemisReconciler) ProcessUpgrade(customResource *brokerv2alpha2.ActiveMQArtemis, client client.Client, scheme *runtime.Scheme, currentStatefulSet *appsv1.StatefulSet) uint8 {
 
 	reqLogger := log.WithValues("ActiveMQArtemis Name", customResource.Name)
-	reqLogger.Info("Entering into process upgrade")
+	reqLogger.Info("xxxx Entering into process upgrade")
 
 	var err error = nil
 	var createError error = nil
@@ -960,6 +964,7 @@ func (reconciler *ActiveMQArtemisReconciler) ProcessUpgrade(customResource *brok
 
 	for index := range requestedResources {
 		requestedResources[index].SetNamespace(customResource.Namespace)
+		log.Info("xxxxxx Requested resource", "index", index, "resource", requestedResources[index])
 	}
 
 	deployed, err := getDeployedResources(customResource, client)
@@ -974,51 +979,73 @@ func (reconciler *ActiveMQArtemisReconciler) ProcessUpgrade(customResource *brok
 
 	writer := write.New(client).WithOwnerController(customResource, scheme)
 
+	log.Info("xxxxx processing deltas")
 	for resourceType, delta := range deltas {
 		if !delta.HasChanges() {
 			continue
 		}
-		reqLogger.Info("", "instances of ", resourceType, "Will create ", len(delta.Added), "update ", len(delta.Updated), "and delete", len(delta.Removed))
+		reqLogger.Info("xxxxxx", "instances of ", resourceType, "Will create ", len(delta.Added), "update ", len(delta.Updated), "and delete", len(delta.Removed))
 
 		for index := range delta.Added {
 			requested := delta.Added[index]
 			kind := requested.GetName()
 			added = true
+			reqLogger.Info("xxxxx process added delta", "index", index, "name", kind);
+			
 			switch kind {
 			case ss.NameBuilder.Name():
 				if err := resources.Retrieve(namespacedName, client, requested); err != nil {
+					reqLogger.Info("xxxx creating ...", "name", kind);
 					if createError = resources.Create(customResource, namespacedName, client, scheme, requested); createError == nil {
 						stepsComplete |= CreatedStatefulSet
 						ss.GLOBAL_CRNAME = customResource.Name
+						reqLogger.Info("xxxxxx creating ok", "name", kind)
 					}
 				}
 			case svc.HeadlessNameBuilder.Name():
 				if err = resources.Retrieve(namespacedName, client, requested); err != nil {
+					reqLogger.Info("xxxx creating ...", "name", kind);
 					if createError = resources.Create(customResource, namespacedName, client, scheme, requested); createError == nil {
 						stepsComplete |= CreatedHeadlessService
+						reqLogger.Info("xxxxxx creating ok", "name", kind)
 					}
 				}
 			case svc.PingNameBuilder.Name():
 				if err = resources.Retrieve(namespacedName, client, requested); err != nil {
+					reqLogger.Info("xxxx creating ...", "name", kind);
 					if createError = resources.Create(customResource, namespacedName, client, scheme, requested); createError == nil {
 						stepsComplete |= CreatedPingService
+						reqLogger.Info("xxxxxx creating ok", "name", kind)
 					}
 				}
 			default:
+			    log.Info("xxxx in default, retrieving requestd", "ns", namespacedName, "requested", requested)
 				if err := resources.Retrieve(namespacedName, client, requested); err != nil {
 					if errors.IsNotFound(err) {
+						reqLogger.Error(err, "xxxx creating default ...", "name", kind);
 						if createError = resources.Create(customResource, namespacedName, client, scheme, requested); createError != nil {
-							reqLogger.Error(createError, "Failed to create resource", "kind", kind, "requested", requested)
+							reqLogger.Error(createError, "xxxxxxxFailed to create resource", "kind", kind, "requested", requested)
+						} else {
+							reqLogger.Info("xxxxxx creating ok", "name", kind)
 						}
 					}
 				}
 			}
 		}
 
+		log.Info("xxxx Processing updated res", "size", len(delta.Updated))
+		if len(delta.Updated) > 0 {
+			for index := range delta.Updated {
+				log.Info("xxxx list update", "index", index, "toupdate res", delta.Updated[index])	
+			}
+		}
+		log.Info("xxxxx now calling writer for all updated", "type", resourceType)
 		updated, err := writer.UpdateResources(deployed[resourceType], delta.Updated)
 		if err != nil {
+			log.Error(err, "xxxxx failed to update")
 			return stepsComplete
 		}
+		log.Info("xxxxxx now go on for removed...")
 		removed, err := writer.RemoveResources(delta.Removed)
 		if err != nil {
 			return stepsComplete
@@ -1037,6 +1064,7 @@ func (reconciler *ActiveMQArtemisReconciler) ProcessUpgrade(customResource *brok
 	//empty the collected objects
 	requestedResources = nil
 
+	log.Info("xxxxxxx ok done")
 	return stepsComplete
 }
 
