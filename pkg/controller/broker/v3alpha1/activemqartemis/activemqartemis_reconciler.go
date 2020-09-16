@@ -1223,18 +1223,17 @@ func NewPodTemplateSpecForCR(customResource *brokerv3alpha1.ActiveMQArtemis) cor
 	Spec := corev1.PodSpec{}
 	Containers := []corev1.Container{}
 	
-	envVar := "GetFromSomewhere?"
-	output := "/tools/broker.yaml"
+	envVarTuneFilePath := "TUNE_PATH"
+	outputDir := "/yacfg_etc"
 	
-	brokerYaml := cr2jinja2.MakeBrokerCfgOverrides(customResource, &envVar, &output)
+	brokerYaml := cr2jinja2.MakeBrokerCfgOverrides(customResource, nil, nil)
 	
 	InitContainers := []corev1.Container {
 		{
 			Name:	"activemq-artemis-init",
-			Image:	"quay.io/hgao/init-container:bug2885",
-//			Command:	[]string{"/usr/local/bin/yacfg", "--help"},
+			Image:	"quay.io/hgao/init-container:1.0",
 			Command:	[]string{"/bin/bash"},
-			Args:		[]string{"-c", "echo " + brokerYaml + " > /tools/broker.yaml; "},
+			Args:		[]string{"-c", "echo " + brokerYaml + " > ./broker.yaml; yacfg --profile artemis/2.14.0/default_with_user_address_settings.yaml  --tune ./broker.yaml --output " + outputDir},
 		},
 	}
 
@@ -1245,12 +1244,18 @@ func NewPodTemplateSpecForCR(customResource *brokerv3alpha1.ActiveMQArtemis) cor
 		container.VolumeMounts = volumeMounts
 	}
 
-	volumeMountForCfg := volumes.MakeVolumeMountForCfg("tool-dir", "/tools")
+	volumeMountForCfg := volumes.MakeVolumeMountForCfg("tool-dir", outputDir)
 	container.VolumeMounts = append(container.VolumeMounts, volumeMountForCfg)
 	InitContainers[0].VolumeMounts = append(InitContainers[0].VolumeMounts, volumeMountForCfg)
-
+	
 	Spec.InitContainers = InitContainers
 	Spec.Containers = append(Containers, container)
+
+	tuneFile := corev1.EnvVar {
+		Name: envVarTuneFilePath,
+		Value: outputDir,
+	}
+	environments.Create(Spec.Containers, &tuneFile)
 
 	volumeForCfg := volumes.MakeVolumeForCfg("tool-dir")
 

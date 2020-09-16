@@ -48,9 +48,9 @@ type AddressSettingType struct {
 	RedeliveryCollisionAvoidanceFactor  *int32  `json:"redeliveryCollisionAvoidanceFactor,omitempty"`
 	MaxRedeliveryDelay                  *int32  `json:"maxRedeliveryDelay,omitempty"`
 	MaxDeliveryAttempts                 *int32  `json:"maxDeliveryAttempts,omitempty"`
-	MaxSizeBytes                        *int64  `json:"maxSizeBytes,omitempty"`
+	MaxSizeBytes                        *string  `json:"maxSizeBytes,omitempty"`
 	MaxSizeBytesRejectThreshold         *int32  `json:"maxSizeBytesRejectThreshold,omitempty"`
-	PageSizeBytes                       *int64 `json:"pageSizeBytes,omitempty"`
+	PageSizeBytes                       *string `json:"pageSizeBytes,omitempty"`
 	PageMaxCacheSize                    *int32  `json:"pageMaxCacheSize,omitempty"`
 	AddressFullPolicy                   *string `json:"addressFullPolicy,omitempty"`
 	MessageCounterHistoryDayLimit       *int32  `json:"messageCounterHistoryDayLimit,omitempty"`

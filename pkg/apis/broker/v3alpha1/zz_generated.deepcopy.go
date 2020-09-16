@@ -233,7 +233,7 @@ func (in *AddressSettingType) DeepCopyInto(out *AddressSettingType) {
 	}
 	if in.MaxSizeBytes != nil {
 		in, out := &in.MaxSizeBytes, &out.MaxSizeBytes
-		*out = new(int64)
+		*out = new(string)
 		**out = **in
 	}
 	if in.MaxSizeBytesRejectThreshold != nil {
@@ -243,7 +243,7 @@ func (in *AddressSettingType) DeepCopyInto(out *AddressSettingType) {
 	}
 	if in.PageSizeBytes != nil {
 		in, out := &in.PageSizeBytes, &out.PageSizeBytes
-		*out = new(int64)
+		*out = new(string)
 		**out = **in
 	}
 	if in.PageMaxCacheSize != nil {
