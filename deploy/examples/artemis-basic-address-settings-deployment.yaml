@@ -5,17 +5,17 @@ metadata:
 spec:
   deploymentPlan:
     size: 1
-    image: quay.io/hgao/amq-openshift-image:cloud-1.0
+    image: quay.io/hgao/amq-openshift-image:0.1.0
   addressSettings:
     addressSetting:
     - match: '#'
       deadLetterAddress: dlqamq
       defaultConsumerWindowSize: 666666
-      maxSizeBytes: 12345678
+      maxSizeBytes: '12345678'
     - match: 'abc#'
       deadLetterAddress: dlqamsssq
       defaultConsumerWindowSize: 555555
-      maxSizeBytes: 12345678
+      maxSizeBytes: '12m'
 
 
 

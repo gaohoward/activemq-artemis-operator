@@ -48,15 +48,14 @@ func MakeBrokerCfgOverrides(customeResource *brokerv3alpha1.ActiveMQArtemis, env
 	
 	processAddressSettings(&sb, addressSettings);
 	
-	fmt.Println("envvar: " + (*envVar))
 	if envVar != nil && *envVar != "" {
-		//how to do?
+		fmt.Println("envvar: " + (*envVar))
 	}
 
 	result := sb.String()
 
-	fmt.Println("output " + *output)
 	if output != nil && *output != "" {
+		fmt.Println("output " + *output)
 		err := ioutil.WriteFile(*output, []byte(result), 0644)
 		if err != nil {
 			panic(err)

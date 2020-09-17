@@ -266,7 +266,7 @@ spec:
                             description: >-
                               the maximum size in bytes for an address. -1 means no limits. This is used in PAGING, BLOCK and
                               FAIL policies. Supports byte notation like K, Mb, GB, etc.
-                            type: integer
+                            type: string
                           maxSizeBytesRejectThreshold:
                             description: >-
                               used with the address full BLOCK policy, the maximum size in bytes an address can reach before

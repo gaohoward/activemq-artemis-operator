@@ -1226,14 +1226,22 @@ func NewPodTemplateSpecForCR(customResource *brokerv3alpha1.ActiveMQArtemis) cor
 	envVarTuneFilePath := "TUNE_PATH"
 	outputDir := "/yacfg_etc"
 	
+	testVar := "hello"
+	
 	brokerYaml := cr2jinja2.MakeBrokerCfgOverrides(customResource, nil, nil)
 	
 	InitContainers := []corev1.Container {
 		{
 			Name:	"activemq-artemis-init",
 			Image:	"quay.io/hgao/init-container:1.0",
+			ImagePullPolicy: "Always",
 			Command:	[]string{"/bin/bash"},
-			Args:		[]string{"-c", "echo " + brokerYaml + " > ./broker.yaml; yacfg --profile artemis/2.14.0/default_with_user_address_settings.yaml  --tune ./broker.yaml --output " + outputDir},
+			Args:		[]string{"-c", 
+			"echo " + testVar + " > " + outputDir + 
+			"/broker.yaml; cat /yacfg_etc/broker.yaml; ls -lrt " + outputDir +
+			 "; echo '" + brokerYaml + "' > " + outputDir + 
+			"/broker.yaml; yacfg --profile artemis/2.14.0/default_with_user_address_settings.yaml  --tune " + 
+			outputDir + "/broker.yaml --output " + outputDir},
 		},
 	}
 
