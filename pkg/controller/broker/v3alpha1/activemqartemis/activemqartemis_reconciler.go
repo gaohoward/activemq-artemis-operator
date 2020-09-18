@@ -1240,7 +1240,7 @@ func NewPodTemplateSpecForCR(customResource *brokerv3alpha1.ActiveMQArtemis) cor
 			"echo " + testVar + " > " + outputDir + 
 			"/broker.yaml; cat /yacfg_etc/broker.yaml; ls -lrt " + outputDir +
 			 "; echo '" + brokerYaml + "' > " + outputDir + 
-			"/broker.yaml; yacfg --profile artemis/2.14.0/default_with_user_address_settings.yaml  --tune " + 
+			"/broker.yaml; cat /yacfg_etc/broker.yaml; yacfg --profile artemis/2.14.0/default_with_user_address_settings.yaml  --tune " + 
 			outputDir + "/broker.yaml --output " + outputDir},
 		},
 	}
