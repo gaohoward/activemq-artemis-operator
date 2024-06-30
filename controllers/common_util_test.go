@@ -1085,3 +1085,11 @@ func UninstallClusteredIssuer(issuerName string) {
 
 	CleanResource(currentIssuer, issuerName, defaultNamespace)
 }
+
+func CloneStringMap(original map[string]string) map[string]string {
+	copy := make(map[string]string)
+	for key, value := range original {
+		copy[key] = value
+	}
+	return copy
+}

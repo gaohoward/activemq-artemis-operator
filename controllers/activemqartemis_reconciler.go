@@ -1475,6 +1475,20 @@ func (reconciler *ActiveMQArtemisReconcilerImpl) ProcessResources(customResource
 	})
 
 	var compositeError []error
+	reqLogger.Info("comparing deployed with requested")
+	for k, v := range reconciler.deployed {
+		reqLogger.Info("deployed ", "type", k)
+		for i, o := range v {
+			reqLogger.Info("[]", "i", i, "obj", o)
+		}
+	}
+	for k, v := range requested {
+		reqLogger.Info("requested ", "type", k)
+		for i, o := range v {
+			reqLogger.Info("[]", "i", i, "obj", o)
+		}
+	}
+	reqLogger.Info("comparing ....")
 	deltas := comparator.Compare(reconciler.deployed, requested)
 	for _, resourceType := range getOrderedTypeList() {
 		delta, ok := deltas[resourceType]
